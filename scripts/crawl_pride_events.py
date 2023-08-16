@@ -1,5 +1,6 @@
 import logging
 import scrapy
+from geopy.geocoders import GeoNames
 
 logging.getLogger("scrapy").setLevel(logging.WARNING)
 
@@ -10,15 +11,26 @@ class scrapePrideEvents(scrapy.Spider):
 
     def parse(self, response):
         tables = []
+        # Potentially run this again when possible
+        """ def read_country(city):
+            geolocator = GeoNames(username="sopoour")
+            location = geolocator.geocode(city)
+            country = location.address.split(",")[
+                -1
+            ]  # split the string based on comma and retruns the last element (country)
+            return country """
+
         # Go through all tables in Wikipedia page that are relevant (incl. wikitable class)
         for table in response.xpath('//*[contains(@class, "wikitable")]//tbody'):
             events = []
             # for each table go through all the rows
             for row in table.xpath("tr"):
                 # parse the data into a respective object
+                """print(read_country(row.xpath("td[2]//text()").extract_first()))"""
                 event = {
                     "LGBTQIA+ event": row.xpath("td[1]//text()").extract_first(),
-                    "Location": row.xpath("td[2]//text()").extract_first(),
+                    "City": row.xpath("td[2]//text()").extract_first(),
+                    """ "Country": read_country(row.xpath("td[2]//text()").extract_first()), """
                     "Official website": row.xpath("td[3]//text()").extract_first(),
                     "Occurs every": row.xpath("td[4]//text()").extract_first(),
                     "Start": row.xpath("td[5]//text()").extract_first(),

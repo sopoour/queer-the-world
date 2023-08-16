@@ -1,8 +1,12 @@
-import React from "react"
+import React, { useRef, useState } from "react"
 import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import data from '../scripts/data.json';
+import dynamic from "next/dynamic";
+const OpenStreetMap = dynamic(() => import('../components/OpenStreetMap'), {
+  ssr: false,
+})
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = [
@@ -28,34 +32,13 @@ type Props = {
 }
 
 const Blog: React.FC<Props> = (props) => {
-  const dataTest = data[0]
+  const [center, setCenter] = useState({ lat: -4.043477, lng: 39.668205 })
+  const ZOOM_LEVEL = 9
+  const mapRef = useRef()
+
   return (
     <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
-       {dataTest.events?.map(d => (<p>{d["LGBTQIA+ event"]}</p>))}
-        <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
+      <OpenStreetMap />
     </Layout>
   )
 }
