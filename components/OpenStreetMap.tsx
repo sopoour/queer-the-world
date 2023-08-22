@@ -1,5 +1,5 @@
 import React, { useState, useRef, FC } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import styled from '@emotion/styled';
@@ -14,10 +14,8 @@ const StyledMapContainer = styled(MapContainer)`
 `;
 
 const StyledMarker = styled(Marker)`
-  border: red;
-  > .leaflet-div-icon {
-    background-color: transparent !important;
-    border: none !important;
+  > div {
+    border: red !important;
   }
 `;
 
@@ -32,17 +30,21 @@ const OpenStreetMap: FC = () => {
   const mapRef = useRef();
 
   return (
-    <StyledMapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <StyledMarker position={[51.505, -0.09]} icon={Pin}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </StyledMarker>
-    </StyledMapContainer>
+    <>
+      <LocationOnIcon />
+      <StyledMapContainer center={[40.71427, -74.00597]} zoom={13} scrollWheelZoom={false}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
+        />
+
+        <StyledMarker position={[40.71427, -74.00597]} icon={Pin}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </StyledMarker>
+      </StyledMapContainer>
+    </>
   );
 };
 
