@@ -1,9 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { GetStaticProps } from 'next';
 import Layout from '../components/Layout';
 import Post, { PostProps } from '../components/Post';
 import data from '../scripts/data.json';
 import dynamic from 'next/dynamic';
+import styled from '@emotion/styled';
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+`;
+
 const OpenStreetMap = dynamic(() => import('../components/OpenStreetMap'), {
   ssr: false,
 });
@@ -36,9 +43,24 @@ const Blog: React.FC<Props> = (props) => {
   const ZOOM_LEVEL = 9;
   const mapRef = useRef();
 
+  const [loadMore, setLoadMore] = useState<number>(5);
+
   return (
     <Layout>
-      <OpenStreetMap />
+      {data.map((d) => (
+        <>
+          <h1> {d.area}</h1>
+          <Grid>
+            {d.events?.map((event) => (
+              <>
+                <p>{event.City}</p>
+                <p>{event['LGBTQIA+ event']}</p>
+                <OpenStreetMap location={event.Geocode as [number, number]} />
+              </>
+            ))}
+          </Grid>
+        </>
+      ))}
     </Layout>
   );
 };
