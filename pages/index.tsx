@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Layout from '../components/Layout';
 import Post, { PostProps } from '../components/Post';
 import data from '../scripts/data.json';
@@ -15,7 +15,7 @@ const OpenStreetMap = dynamic(() => import('../components/OpenStreetMap'), {
   ssr: false,
 });
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const feed = [
     {
       id: '1',
@@ -30,7 +30,6 @@ export const getStaticProps: GetStaticProps = async () => {
   ];
   return {
     props: { feed },
-    revalidate: 10,
   };
 };
 
@@ -51,13 +50,9 @@ const Blog: React.FC<Props> = (props) => {
         <>
           <h1> {d.area}</h1>
           <Grid>
-            {d.events?.map((event) => (
-              <>
-                <p>{event.City}</p>
-                <p>{event['LGBTQIA+ event']}</p>
-                <OpenStreetMap location={event.Geocode as [number, number]} />
-              </>
-            ))}
+            <p>{d.events[0].city}</p>
+            <p>{d.events[0].name}</p>
+            <OpenStreetMap location={d.events[0].coordinates as [number, number]} />
           </Grid>
         </>
       ))}

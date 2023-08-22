@@ -39,13 +39,15 @@ class scrapePrideEvents(scrapy.Spider):
             for row in table.xpath("tr"):
                 # parse the data into a respective object
                 event = {
-                    "LGBTQIA+ event": row.xpath("td[1]//text()").extract_first(),
-                    "City": row.xpath("td[2]//text()").extract_first(),
+                    "name": row.xpath("td[1]//text()").extract_first(),
+                    "city": row.xpath("td[2]//text()").extract_first(),
                     # get the coordinates based on the location that is given in my data
-                    "Geocode": read_country(row.xpath("td[2]//text()").extract_first()),
-                    "Official website": row.xpath("td[3]//text()").extract_first(),
-                    "Occurs every": row.xpath("td[4]//text()").extract_first(),
-                    "Start": row.xpath("td[5]//text()").extract_first(),
+                    "coordinates": read_country(
+                        row.xpath("td[2]//text()").extract_first()
+                    ),
+                    "website": row.xpath("td[3]//text()").extract_first(),
+                    "occursEvery": row.xpath("td[4]//text()").extract_first(),
+                    "foundingYear": row.xpath("td[5]//text()").extract_first(),
                 }
                 # skip rows that have no values (that's the header)
                 if None not in list(event.values()):

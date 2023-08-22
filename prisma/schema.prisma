@@ -1,0 +1,30 @@
+// schema.prisma
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Event {
+  id             String        @id @default(cuid())
+  name           String
+  city           String?
+  coordinates    Int[]         @default([])
+  website        String?
+  occursEvery    String?
+  foundingYear   String?
+  EventCluster   EventCluster? @relation(fields: [eventClusterId], references: [id])
+  eventClusterId String?
+}
+
+model EventCluster {
+  id     String  @id @default(cuid())
+  name   String?
+  events Event[]
+}
