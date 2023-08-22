@@ -15,7 +15,7 @@ model Event {
   id             String        @id @default(cuid())
   name           String
   city           String?
-  coordinates    Int[]         @default([])
+  coordinates    Float[]         @default([])
   website        String?
   occursEvery    String?
   foundingYear   String?
