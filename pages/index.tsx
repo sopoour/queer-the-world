@@ -5,6 +5,9 @@ import Post, { PostProps } from '../components/Post';
 import data from '../scripts/data.json';
 import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
+import useEvents from '@app/hooks/useEvents';
+import useEventsById from '@app/hooks/useEventsById';
+import { Event } from '@prisma/client';
 
 const Grid = styled.div`
   display: grid;
@@ -15,49 +18,50 @@ const OpenStreetMap = dynamic(() => import('../components/OpenStreetMap'), {
   ssr: false,
 });
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const feed = [
-    {
-      id: '1',
-      title: 'Prisma is the perfect ORM for Next.js',
-      content: '[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!',
-      published: false,
-      author: {
-        name: 'Nikolas Burk',
-        email: 'burk@prisma.io',
-      },
-    },
-  ];
-  return {
-    props: { feed },
-  };
-};
+const Home: React.FC = () => {
+  /* const [center, setCenter] = useState({ lat: -4.043477, lng: 39.668205 }); */
+  const [totalEvents, setTotalEvents] = useState<Event[]>([]);
+  const [loadMore, setLoadMore] = useState<string>();
+  const [pageIndex, setPageIndex] = useState<number>(1);
+  const { events } = useEventsById(loadMore, pageIndex);
+  const { events: eventClusters, isLoading } = useEvents();
 
-type Props = {
-  feed: PostProps[];
-};
+  useEffect(() => {
+    if (loadMore && events?.length > 0) setTotalEvents([...(totalEvents ?? []), ...events]);
+  }, [loadMore, events]);
 
-const Blog: React.FC<Props> = (props) => {
-  const [center, setCenter] = useState({ lat: -4.043477, lng: 39.668205 });
-  const ZOOM_LEVEL = 9;
-  const mapRef = useRef();
+  console.log({ totalEvents: totalEvents?.length });
 
-  const [loadMore, setLoadMore] = useState<number>(5);
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <Layout>
-      {data.map((d) => (
+      {eventClusters?.map((d) => (
         <>
-          <h1> {d.area}</h1>
-          <Grid>
-            <p>{d.events[0].city}</p>
-            <p>{d.events[0].name}</p>
-            <OpenStreetMap location={d.events[0].coordinates as [number, number]} />
-          </Grid>
+          <h1> {d.name}</h1>
+          <p>{d.eventsCount}</p>
+          {(loadMore === d.id ? [...d.events, ...(totalEvents ?? [])] : d.events)?.map((event) => (
+            <Grid>
+              <p>{event.city}</p>
+              <p>{event.name}</p>
+              <OpenStreetMap location={event.coordinates as [number, number]} />
+            </Grid>
+          ))}
+
+          {totalEvents?.length + 5 < d.eventsCount && (
+            <button
+              onClick={() => {
+                setLoadMore(d.id);
+                setPageIndex(pageIndex + 1);
+              }}
+            >
+              Load more
+            </button>
+          )}
         </>
       ))}
     </Layout>
   );
 };
 
-export default Blog;
+export default Home;
