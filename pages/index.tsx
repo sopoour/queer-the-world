@@ -27,10 +27,12 @@ const Home: React.FC = () => {
   const { events: eventClusters, isLoading } = useEvents();
 
   useEffect(() => {
+    // append new events
+    // ! this needs to be changed !
+    // * Idea: visualize the continents/areas and only start loading events when clicking on it
+    // * -> handle that in a component passed down a eventsClusterId
     if (loadMore && events?.length > 0) setTotalEvents([...(totalEvents ?? []), ...events]);
   }, [loadMore, events]);
-
-  console.log({ totalEvents: totalEvents?.length });
 
   if (isLoading) return <p>Loading...</p>;
 
