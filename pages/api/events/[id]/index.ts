@@ -15,5 +15,7 @@ export default async function getEventsById(req: NextApiRequest, res: NextApiRes
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
+  } finally {
+    prisma.$disconnect();
   }
 }
