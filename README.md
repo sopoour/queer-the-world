@@ -1,3 +1,5 @@
+### **DISCLAIMER: this is WIP and is my current active project**
+
 # Visualizing LGBTQIA+ events around the world all year long
 
 ## Tech stack setup
@@ -7,8 +9,8 @@
 
 ## First iteration
 
-* Using Prisma and Postgres in Vercel for DB
-* Focus on nice visualization with map, card and timeline view
+* Using Prisma and Postgres in Vercel for DB **(Done but needs better paging)**
+* Focus on nice visualization with map, card and timeline view **(No proper designing and FE work yet)**
 * Make it easier overall to discover events in your country
 
 ## Later iterations
