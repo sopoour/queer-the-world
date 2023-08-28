@@ -8,9 +8,10 @@ export default async function getEventsById(
   const { id, page } = req.query;
   try {
     const isPageNumber = typeof page === "string" && !Number.isNaN(page)
-    console.log({page: 5 + ((+page - 1) * 5)})
     const data = await prisma.event.findMany({
+      // we take the first 5 from the eventsCluster and only when paging we take 5
       take: +page === 1 ? 0 : 5,
+      // just make sure we have a valid page number as num
       skip: isPageNumber ? (+page - 1) * 5 : 0 ,
       where: { eventClusterId: id as string },
     });
