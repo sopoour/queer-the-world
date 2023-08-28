@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ApiResponse, Options } from "./types";
+import { useState } from 'react';
+import { ApiResponse, Options } from './types';
 
 type UseLazyFetchOptions = {
   body?: any;
@@ -11,7 +11,7 @@ type UseLazyFetchResult<T> = {
 
 async function fetcher<T>(
   url: string,
-  options: Options = { method: "GET" },
+  options: Options = { method: 'GET' },
   opts?: UseLazyFetchOptions
 ): Promise<T> {
   try {
@@ -19,7 +19,7 @@ async function fetcher<T>(
       method: options.method,
       headers: {
         ...(options.headers ?? {}),
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: opts?.body
         ? JSON.stringify(opts.body)
@@ -39,10 +39,7 @@ async function fetcher<T>(
   }
 }
 
-function useFetch<T>(
-  url: string,
-  options: Options = { method: "GET" }
-): UseLazyFetchResult<T> {
+function useFetch<T>(url: string, options: Options = { method: 'GET' }): UseLazyFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
