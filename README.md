@@ -7,13 +7,12 @@
 
 ## First iteration
 
-* load data into React app only based on a JSON file that is generated when scraping the data
+* Using Prisma and Postgres in Vercel for DB
 * Focus on nice visualization with map, card and timeline view
 * Make it easier overall to discover events in your country
 
 ## Later iterations
 
-* load data into Postgres db via Prisma
 * scrape data from more sources
 * other improvs
 
