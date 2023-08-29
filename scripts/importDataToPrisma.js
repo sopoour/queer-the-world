@@ -5,8 +5,14 @@ const data = require('./data.json');
 const importEventClustersToPrisma = async () => {
   try {
     for (const item of data) {
-      await prisma.eventCluster.create({
-        data: {
+      await prisma.eventCluster.upsert({
+        where: {
+          id: true,
+        },
+        update: {
+          name: item.area,
+        },
+        create: {
           name: item.area,
         },
       });
@@ -29,8 +35,15 @@ const importEventsToPrisma = async () => {
         },
       });
       for (const event of item.events) {
-        await prisma.event.create({
-          data: {
+        await prisma.event.upsert({
+          where: {
+            id: true,
+          },
+          update: {
+            ...event,
+            eventClusterId: data.id,
+          },
+          create: {
             ...event,
             eventClusterId: data.id,
           },

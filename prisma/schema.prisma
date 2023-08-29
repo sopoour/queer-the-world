@@ -15,7 +15,7 @@ model Event {
   id             String        @id @default(cuid())
   name           String
   city           String?
-  coordinates    Float[]         @default([])
+  coordinates    Float[]       @default([])
   website        String?
   occursEvery    String?
   foundingYear   String?
@@ -24,7 +24,8 @@ model Event {
 }
 
 model EventCluster {
-  id     String  @id @default(cuid())
-  name   String?
-  events Event[]
+  id          String  @id @default(cuid())
+  name        String?
+  coordinates Float[] @default([])
+  events      Event[]
 }
