@@ -41,7 +41,7 @@ const Home: React.FC = () => {
       {eventClusters?.map((d) => (
         <>
           <h1> {d.name}</h1>
-          <p>{d.eventsCount}</p>
+          <p>{d._count?.events}</p>
           {(loadMore === d.id ? [...d.events, ...(totalEvents ?? [])] : d.events)?.map((event) => (
             <Grid>
               <p>{event.city}</p>
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
             </Grid>
           ))}
 
-          {totalEvents?.length + 5 < d.eventsCount && (
+          {totalEvents?.length + 5 < d._count?.events && (
             <button
               onClick={() => {
                 setLoadMore(d.id);
