@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material';
 import theme from '@app/styles/theme';
 import Layout from '@app/components/Layout';
 
-function MyApp({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <Layout>
@@ -13,6 +13,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Layout>
     </ThemeProvider>
   );
-}
+};
 
-export default MyApp;
+export default App;
