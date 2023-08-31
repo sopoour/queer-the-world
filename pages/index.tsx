@@ -1,8 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { GetServerSideProps } from 'next';
-import Layout from '../components/Layout';
-import Post, { PostProps } from '../components/Post';
-import data from '../scripts/data.json';
 import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
 import useEvents from '@app/hooks/useEvents';
@@ -37,7 +33,7 @@ const Home: React.FC = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <Layout>
+    <>
       {eventClusters?.map((d) => (
         <>
           <h1> {d.name}</h1>
@@ -62,7 +58,7 @@ const Home: React.FC = () => {
           )}
         </>
       ))}
-    </Layout>
+    </>
   );
 };
 

@@ -1,50 +1,28 @@
-import React, { ReactNode } from "react";
-import Header from "./Header";
+import React, { FC, ReactNode } from 'react';
+import Header from './Header/Header';
+import styled from '@emotion/styled';
+
+const Root = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f4e2;
+  padding-top: 0;
+`;
+
+const MainLayout = styled.main`
+  padding: 32px 16px;
+`;
 
 type Props = {
   children: ReactNode;
 };
 
-const Layout: React.FC<Props> = (props) => (
-  <div>
+const Layout: FC<Props> = ({ children }) => (
+  <Root>
     <Header />
-    <div className="layout">{props.children}</div>
-    <style jsx global>{`
-      html {
-        box-sizing: border-box;
-      }
-
-      *,
-      *:before,
-      *:after {
-        box-sizing: inherit;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-        font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-          "Segoe UI Symbol";
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      input,
-      textarea {
-        font-size: 16px;
-      }
-
-      button {
-        cursor: pointer;
-      }
-    `}</style>
-    <style jsx>{`
-      .layout {
-        padding: 0 2rem;
-      }
-    `}</style>
-  </div>
+    <MainLayout>{children}</MainLayout>
+  </Root>
 );
 
 export default Layout;
