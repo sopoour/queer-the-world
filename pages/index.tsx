@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import useEvents from '@app/hooks/useEvents';
 import useEventsById from '@app/hooks/useEventsById';
 import { Event } from '@prisma/client';
+import NorthAmerica from '@app/components/Continent/assets/north_america.svg';
 
 const Grid = styled.div`
   display: grid;
@@ -11,6 +12,10 @@ const Grid = styled.div`
 `;
 
 const OpenStreetMap = dynamic(() => import('../components/OpenStreetMap'), {
+  ssr: false,
+});
+
+const Continent = dynamic(() => import('../components/Continent/Continent'), {
   ssr: false,
 });
 
@@ -33,11 +38,19 @@ const Home: React.FC = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
+    <Grid>
+      <Continent coordinates={[37.5, 110]}>
+        <NorthAmerica />
+      </Continent>
+    </Grid>
+  );
+
+  /* return (
     <>
       {eventClusters?.map((d) => (
         <>
           <h1> {d.name}</h1>
-          <p>{d._count?.events}</p>
+          <p>{d.eventsCount}</p>
           {(loadMore === d.id ? [...d.events, ...(totalEvents ?? [])] : d.events)?.map((event) => (
             <Grid>
               <p>{event.city}</p>
@@ -46,7 +59,7 @@ const Home: React.FC = () => {
             </Grid>
           ))}
 
-          {totalEvents?.length + 5 < d._count?.events && (
+          {totalEvents?.length + 5 < d.eventsCount && (
             <button
               onClick={() => {
                 setLoadMore(d.id);
@@ -59,7 +72,7 @@ const Home: React.FC = () => {
         </>
       ))}
     </>
-  );
+  ); */
 };
 
 export default Home;
