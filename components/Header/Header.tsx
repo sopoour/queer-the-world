@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from './assets/logo_type.svg';
-import styled from '@emotion/styled';
+import { styled } from 'styled-components';
 
 const HeaderWrapper = styled.nav`
   display: flex;

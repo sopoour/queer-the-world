@@ -2,19 +2,19 @@ import React, { useState, useRef, FC, useEffect, ReactElement } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import styled from '@emotion/styled';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { styled } from 'styled-components';
+import { FaLocationDot } from 'react-icons/fa6';
 import ReactDOMServer from 'react-dom/server';
-import { css } from '@emotion/react';
 
 const Root = styled.div`
-  display: block;
-  height: 400px;
+  height: 100%;
+  position: relative;
 `;
 
 const ContinentContainer = styled.div`
   position: relative;
   width: 100%;
+  max-width: 300px;
 `;
 
 const StyledMapContainer = styled(MapContainer)`
@@ -32,7 +32,7 @@ const StyledMarker = styled(Marker)`
 
 const Pin = L.divIcon({
   iconSize: [20, 20],
-  html: ReactDOMServer.renderToString(<LocationOnIcon />),
+  html: ReactDOMServer.renderToString(<FaLocationDot />),
 });
 
 type Props = {
@@ -45,7 +45,7 @@ const Continent: FC<Props> = ({ coordinates, children }) => {
   const [mapSeen, setMapSeen] = useState<boolean>(false);
   const ZOOM_LEVEL = 9;
   const mapRef = useRef();
-  if (center.length < 2) {
+  if (center?.length < 2) {
     return null;
   }
 
@@ -57,7 +57,7 @@ const Continent: FC<Props> = ({ coordinates, children }) => {
       }}
     >
       {mapSeen ? (
-        <StyledMapContainer center={center} zoom={13} scrollWheelZoom={false}>
+        <StyledMapContainer center={center} zoom={2} scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"

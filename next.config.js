@@ -4,6 +4,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  experimental: {
+    newNextLinkBehavior: true,
+  },
   webpack(config, { buildId, isServer, webpack }) {
     config.plugins.push(
       new webpack.DefinePlugin({

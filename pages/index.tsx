@@ -1,19 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import styled from '@emotion/styled';
+import { css, styled } from 'styled-components';
 import useEvents from '@app/hooks/useEvents';
 import useEventsById from '@app/hooks/useEventsById';
 import { Event } from '@prisma/client';
-import NorthAmerica from '@app/components/Continent/assets/north_america.svg';
+import continents from '@app/components/Continent/assets';
+import Image from 'next/image';
 
-const Grid = styled.div`
+const Root = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 0.5fr);
+  grid-column-gap: 32px;
+  width: 100%;
+  height: 100%;
+
+  ${(props) => props.theme.media('sm')`
+      grid-template-columns: repeat(3, 1fr);
+      grid-column-gap: 16px;
+  `}
 `;
 
-const OpenStreetMap = dynamic(() => import('../components/OpenStreetMap'), {
-  ssr: false,
-});
+const ContinentImage = styled(Image)<{ left?: string; top?: string }>`
+  position: static;
+  height: auto;
+  width: max-content;
+
+  ${({ theme, top, left }) =>
+    theme.media('sm')`
+      position: absolute;
+      top: ${top ?? 0};
+      left: ${left ?? 0};
+    `}
+`;
 
 const Continent = dynamic(() => import('../components/Continent/Continent'), {
   ssr: false,
@@ -38,11 +56,29 @@ const Home: React.FC = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <Grid>
-      <Continent coordinates={[37.5, 110]}>
-        <NorthAmerica />
-      </Continent>
-    </Grid>
+    <Root>
+      {eventClusters
+        ?.filter((e) => e.name !== 'Worldwide')
+        .map((cluster) => {
+          const continentAsset = continents.find((c) => c.name === cluster.name);
+          return (
+            <Continent
+              coordinates={cluster.coordinates as [number, number]}
+              key={`root-${cluster.name}`}
+            >
+              <ContinentImage
+                width={0}
+                height={0}
+                sizes="100vw"
+                src={continentAsset?.image?.src}
+                alt={continentAsset?.name}
+                top={continentAsset?.top}
+                left={continentAsset?.left}
+              />
+            </Continent>
+          );
+        })}
+    </Root>
   );
 
   /* return (
