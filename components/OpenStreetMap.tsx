@@ -2,8 +2,8 @@ import React, { useState, useRef, FC, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import styled from '@emotion/styled';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { styled } from 'styled-components';
+import { FaLocationDot } from 'react-icons/fa6';
 import ReactDOMServer from 'react-dom/server';
 
 const StyledMapContainer = styled(MapContainer)`
@@ -21,7 +21,7 @@ const StyledMarker = styled(Marker)`
 
 const Pin = L.divIcon({
   iconSize: [20, 20],
-  html: ReactDOMServer.renderToString(<LocationOnIcon />),
+  html: ReactDOMServer.renderToString(<FaLocationDot />),
 });
 
 type Props = {

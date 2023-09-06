@@ -2,10 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
-    styledComponents: {
-      ssr: true, // Enable server-side rendering
-      displayName: true, // Display component names in the DevTools
-    },
+    styledComponents: true,
   },
   experimental: {
     newNextLinkBehavior: true,

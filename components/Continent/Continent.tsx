@@ -2,7 +2,7 @@ import React, { useState, useRef, FC, useEffect, ReactElement } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { styled, css } from 'styled-components';
+import { styled } from 'styled-components';
 import { FaLocationDot } from 'react-icons/fa6';
 import ReactDOMServer from 'react-dom/server';
 
