@@ -15,6 +15,25 @@ type EventClustersWithEvents = Prisma.EventClusterGetPayload<{
   };
 }>;
 
+const sortContinents = (a: EventClustersWithEvents, b: EventClustersWithEvents) => {
+  const map = new Map<string, number>();
+  map.set('North America', 0);
+  map.set('Europe', 1);
+  map.set('Asia', 2);
+  map.set('South America', 3);
+  map.set('Africa', 4);
+  map.set('Oceania', 5);
+  // @ts-ignore
+  if (map.get(a.name) < map.get(b.name)) {
+    return -1;
+  }
+  // @ts-ignore
+  if (map?.get(a.name) > map?.get(b.name)) {
+    return 1;
+  }
+  return 0;
+};
+
 const useEvents = () => {
   const {
     data: events,
@@ -23,7 +42,7 @@ const useEvents = () => {
   } = useSWR<EventClustersWithEvents[]>(`/api/events`, fetcher);
 
   return {
-    events,
+    events: events?.sort(sortContinents),
     isLoading,
     error,
   };
