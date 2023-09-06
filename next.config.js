@@ -2,7 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      ssr: true, // Enable server-side rendering
+      displayName: true, // Display component names in the DevTools
+    },
+  },
+  experimental: {
+    newNextLinkBehavior: true,
   },
   webpack(config, { buildId, isServer, webpack }) {
     config.plugins.push(
