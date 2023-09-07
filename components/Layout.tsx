@@ -7,11 +7,11 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   background: #f5f4e2;
-  width: 100%;
 `;
 
 const MainLayout = styled.main`
-  padding: 48px 200px;
+  max-width: 1000px;
+  padding: 48px 20px;
   flex: 1;
   width: 100%;
   margin: 0 auto;

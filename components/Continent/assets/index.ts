@@ -6,10 +6,10 @@ import southAmerica from './south_america.png';
 import oceania from './oceania.png';
 
 export default [
-  { name: 'Africa', image: africa, top: '180px' },
-  { name: 'Asia', image: asia },
-  { name: 'Europe', image: europe },
-  { name: 'North America', image: northAmerica },
-  { name: 'South America', image: southAmerica, top: '250px', left: '130px' },
-  { name: 'Oceania', image: oceania, top: '250px', left: '200px' },
+  { name: 'Africa', image: africa, top: '200px', left: '350px' },
+  { name: 'Asia', image: asia, right: '75px', top: '0px' },
+  { name: 'Europe', image: europe, top: '25px', left: '350px' },
+  { name: 'North America', image: northAmerica, top: '0px', left: '0px' },
+  { name: 'South America', image: southAmerica, top: '250px', left: '150px' },
+  { name: 'Oceania', image: oceania, top: '275px', right: '0px' },
 ];

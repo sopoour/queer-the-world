@@ -7,14 +7,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import ReactDOMServer from 'react-dom/server';
 
 const Root = styled.div`
-  height: 100%;
   position: relative;
-`;
-
-const ContinentContainer = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 300px;
 `;
 
 const StyledMapContainer = styled(MapContainer)`
@@ -69,7 +62,7 @@ const Continent: FC<Props> = ({ coordinates, children }) => {
           </StyledMarker>
         </StyledMapContainer>
       ) : (
-        <ContinentContainer>{children}</ContinentContainer>
+        <>{children}</>
       )}
     </Root>
   );

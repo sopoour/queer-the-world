@@ -8,28 +8,38 @@ import continents from '@app/components/Continent/assets';
 import Image from 'next/image';
 
 const Root = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 0.5fr);
-  grid-column-gap: 32px;
+  position: relative;
   width: 100%;
-  height: 100%;
-
-  ${(props) => props.theme.media('sm')`
-      grid-template-columns: repeat(3, 1fr);
-      grid-column-gap: 16px;
-  `}
+  height: 100vh;
+  margin: 0 auto;
 `;
 
-const ContinentImage = styled(Image)<{ left?: string; top?: string }>`
-  position: static;
+const ContinentImage = styled(Image)<{ left?: string; top?: string; right?: string }>`
+  position: absolute;
   height: auto;
   width: max-content;
+  max-width: 100px;
+  max-height: 300px;
+  top: ${({ top }) => `calc(${(top === '0px' ? top : top + ' - 10px') ?? 'auto'})`};
+  left: ${({ left }) => `calc(${(left === '0px' ? left : left + ' - 200px') ?? 'auto'})`};
+  right: ${({ right }) => `calc(${(right === '0px' ? right : right + ' - 25px') ?? 'auto'})`};
 
-  ${({ theme, top, left }) =>
+  ${({ theme, top, left, right }) =>
     theme.media('sm')`
-      position: absolute;
-      top: ${top ?? 0};
-      left: ${left ?? 0};
+    max-width: 250px;
+  max-height: 300px;
+      top: calc(${top + ' + 50px' ?? 'auto'});
+      left: calc(${left + ' + 25px' ?? 'auto'});
+      right: calc(${right + ' + 25px' ?? 'auto'});
+    `}
+
+  ${({ theme, top, left, right }) =>
+    theme.media('md')`
+    max-width: 350px;
+  max-height: 300px;
+      top: ${top ?? 'auto'};
+      left: ${left ?? 'auto'};
+      right: ${right ?? 'auto'};
     `}
 `;
 
@@ -74,6 +84,7 @@ const Home: React.FC = () => {
                 alt={continentAsset?.name}
                 top={continentAsset?.top}
                 left={continentAsset?.left}
+                right={continentAsset?.right}
               />
             </Continent>
           );
