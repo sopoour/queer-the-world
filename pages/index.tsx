@@ -8,6 +8,8 @@ import ContinentGroup from '@app/components/ContinentGroup';
 const Root = styled.div`
   width: 100%;
   margin: 0 auto;
+  transition: transform 0.5s ease 0.3s;
+  transform: scale(1);
 `;
 
 const LeafletMap = dynamic(() => import('../components/LeafletMap'), { ssr: false });

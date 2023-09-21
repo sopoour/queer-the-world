@@ -27,7 +27,7 @@ const Pin = L.divIcon({
 
 const StyledMapContainer = styled(MapContainer)`
   && {
-    height: 400px;
+    height: 565px;
     border-radius: 10px !important;
   }
 `;
