@@ -13,7 +13,7 @@ const LocationIcon = styled(MdLocationOn)`
     height: 18px;
 
     path:last-of-type {
-      fill: #cafffc;
+      fill: #fecaff;
       stroke: #06787f;
       stroke-width: 1px;
     }
@@ -35,10 +35,16 @@ const StyledMapContainer = styled(MapContainer)`
 type Props = {
   coordinates: [number, number];
   events: Event[];
+  continentName: string;
 };
 
-const LeafletMap: FC<Props> = ({ coordinates, events }) => (
-  <StyledMapContainer center={coordinates as [number, number]} zoom={2.5} scrollWheelZoom={false}>
+const LeafletMap: FC<Props> = ({ coordinates, events, continentName }) => (
+  <StyledMapContainer
+    center={coordinates as [number, number]}
+    zoom={2.5}
+    scrollWheelZoom={false}
+    aria-labelledBy={`Open street map centered around ${continentName}`}
+  >
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
@@ -53,6 +59,8 @@ const LeafletMap: FC<Props> = ({ coordinates, events }) => (
           icon={Pin}
           key={event.name}
           riseOnHover
+          title={event.name}
+          alt={event.name}
         >
           <Popup>{event.name}</Popup>
         </Marker>

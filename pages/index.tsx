@@ -31,6 +31,7 @@ const Home: React.FC = () => {
         <LeafletMap
           coordinates={focusedContinent.coordinates as [number, number]}
           events={focusedContinent.events}
+          continentName={focusedContinent.name}
         />
       ) : (
         <ContinentGroup onContinentClick={setActiveContinent} />
