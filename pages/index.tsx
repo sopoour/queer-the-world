@@ -23,6 +23,8 @@ const Home: React.FC = () => {
     [activeContinent]
   );
 
+  if (isLoading) return <p>Loading...</p>;
+
   return (
     <Root>
       {activeContinent.length > 0 && focusedContinent ? (

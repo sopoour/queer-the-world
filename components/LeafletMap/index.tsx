@@ -38,7 +38,7 @@ type Props = {
 };
 
 const LeafletMap: FC<Props> = ({ coordinates, events }) => (
-  <StyledMapContainer center={coordinates as [number, number]} zoom={2} scrollWheelZoom={false}>
+  <StyledMapContainer center={coordinates as [number, number]} zoom={2.5} scrollWheelZoom={false}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
