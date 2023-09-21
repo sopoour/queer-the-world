@@ -7,9 +7,7 @@ export default async function getEventClusters(req: NextApiRequest, res: NextApi
       select: {
         id: true,
         name: true,
-        events: {
-          take: 5,
-        },
+        events: true,
         coordinates: true,
         _count: {
           select: {

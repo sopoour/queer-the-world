@@ -128,4 +128,9 @@ fieldset {
 textarea {
   resize: vertical;
 }
+
+.leaflet-div-icon {
+    background: transparent;
+    border: none;
+}
 `;
