@@ -6,6 +6,7 @@ import { Event } from '@prisma/client';
 
 const Svg = styled.svg<{ $active: boolean }>`
   position: absolute;
+  overflow: visible !important;
   top: 0;
   opacity: 1;
   transition: all 0.5s ease-in-out;
@@ -14,7 +15,7 @@ const Svg = styled.svg<{ $active: boolean }>`
     css`
       opacity: 0;
       pointer-events: none;
-      transition: all 0.5s ease 500ms;
+      transition: all 0.5s ease 400ms;
     `}
 `;
 
@@ -69,7 +70,7 @@ const ContinentGroup: FC<Props> = ({ onContinentClick, activeContinent }) => {
             setActive(continent.name);
             setTimeout(() => {
               onContinentClick(continent.name);
-            }, 400);
+            }, 300);
           }}
           $active={continent.name === active}
           $hide={active.length > 0 && continent.name !== active}

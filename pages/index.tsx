@@ -18,7 +18,7 @@ const Transition = styled.span<{ $active: boolean }>`
     $active &&
     css`
       opacity: 1;
-      transition: all 0.5s ease 500ms;
+      transition: all 0.5s ease 300ms;
     `};
 `;
 
