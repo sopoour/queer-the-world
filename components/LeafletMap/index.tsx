@@ -43,7 +43,7 @@ const BackButton = styled.button`
   border-radius: 6px;
   margin-top: 8px;
   margin-right: 8px;
-  pointer-events: all;
+  pointer-events: all !important;
   color: #06787f;
   font-weight: 600;
   font-size: 12px;
