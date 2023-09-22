@@ -1,15 +1,25 @@
-'use client';
 import React, { useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import useEvents from '@app/hooks/useEvents';
 import ContinentGroup from '@app/components/ContinentGroup';
 
 const Root = styled.div`
   width: 100%;
   margin: 0 auto;
-  transition: transform 0.5s ease 0.3s;
-  transform: scale(1);
+  position: relative;
+`;
+
+const Transition = styled.span<{ $active: boolean }>`
+  opacity: 0;
+  position: relative;
+  top: 0;
+  ${({ $active }) =>
+    $active &&
+    css`
+      opacity: 1;
+      transition: all 0.5s ease 500ms;
+    `};
 `;
 
 const LeafletMap = dynamic(() => import('../components/LeafletMap'), { ssr: false });
@@ -27,15 +37,18 @@ const Home: React.FC = () => {
 
   return (
     <Root>
-      {activeContinent.length > 0 && focusedContinent ? (
-        <LeafletMap
-          coordinates={focusedContinent.coordinates as [number, number]}
-          events={focusedContinent.events}
-          continentName={focusedContinent.name}
-        />
-      ) : (
-        <ContinentGroup onContinentClick={setActiveContinent} />
-      )}
+      <Transition $active={activeContinent.length > 0 && !!focusedContinent}>
+        {activeContinent.length > 0 && !!focusedContinent && (
+          <LeafletMap
+            coordinates={focusedContinent?.coordinates as [number, number]}
+            events={focusedContinent?.events}
+            continentName={focusedContinent?.name}
+            onHideMap={() => setActiveContinent('')}
+          />
+        )}
+      </Transition>
+
+      <ContinentGroup onContinentClick={setActiveContinent} activeContinent={activeContinent} />
     </Root>
   );
 };
